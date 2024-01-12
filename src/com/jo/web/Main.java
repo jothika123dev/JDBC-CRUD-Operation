@@ -14,10 +14,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/crud";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "admin@123";
-  
+//    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/crud";
+//    private static final String USERNAME = "root";
+//    private static final String PASSWORD = "admin@123";
+//  
    //main method
     public static void main(String args[]) throws SQLException {
         Scanner s = new Scanner(System.in);
@@ -58,22 +58,22 @@ public class Main {
         }
     }
 
-    private static Connection getConnection() throws SQLException {
-    	
-    	  try {
-    		  //used to loads the JDBC Driver
-    			Class.forName("com.mysql.cj.jdbc.Driver");  		
-    			
-    		}catch(Exception sq) {
-    			System.out.println(sq);		}
-    	 //used to connect the mysql database
-        return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
-    }
+//    private static Connection getConnection() throws SQLException {
+//    	
+//    	  try {
+//    		  //used to loads the JDBC Driver
+//    			Class.forName("com.mysql.cj.jdbc.Driver");  		
+//    			
+//    		}catch(Exception sq) {
+//    			System.out.println(sq);		}
+//    	 //used to connect the mysql database
+//        return DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+//    }
 
     //insert
     private static void insertData() throws SQLException {
         System.out.println("1. Insert New Data");
-        try (Connection con = getConnection();//to check connection of database
+        try (Connection con = ConnectionUtil.getConnection();//to check connection of database
         	//prepareStatement is interface used to execute query
             PreparedStatement st = con.prepareStatement("INSERT INTO student (name, class, mark) VALUES (?, ?, ?)")) {
         	Scanner s = new Scanner(System.in);
@@ -101,7 +101,7 @@ public class Main {
 //update
     private static void updateData() throws SQLException {
         System.out.println("2. Updating a Data");
-        try (Connection con = getConnection();
+        try (Connection con = ConnectionUtil.getConnection();
              PreparedStatement st = con.prepareStatement("UPDATE student SET name=?, class=?, mark=? WHERE id=?")) {
         	 Scanner s = new Scanner(System.in);
             System.out.println("Enter ID : ");
@@ -127,7 +127,7 @@ public class Main {
 //delete
     private static void deleteData() throws SQLException {
         System.out.println("3. Deleting a Data");
-        try (Connection con = getConnection();
+        try (Connection con = ConnectionUtil.getConnection();
              PreparedStatement st = con.prepareStatement("DELETE FROM student WHERE id=?")) {
         	 Scanner s = new Scanner(System.in);
             System.out.println("Enter ID : ");
@@ -144,7 +144,7 @@ public class Main {
 //printAllrecords
     private static void printAllRecords() throws SQLException {
         System.out.println("4. Print all Records");
-        try (Connection con = getConnection();
+        try (Connection con = ConnectionUtil.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT id, name, class, mark FROM student")) {
             //list to store map
@@ -181,7 +181,7 @@ public class Main {
         private static void printRecords() throws SQLException {
         	
         	
-        	try (Connection con = getConnection();
+        	try (Connection con = ConnectionUtil.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT id, name, class, mark FROM student")) {
                    while (rs.next()) {
